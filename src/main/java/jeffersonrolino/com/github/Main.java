@@ -3,7 +3,9 @@ package jeffersonrolino.com.github;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import jeffersonrolino.com.github.dao.ProdutoDAO;
 import jeffersonrolino.com.github.entities.Produto;
+import jeffersonrolino.com.github.util.JPAUtil;
 
 import java.math.BigDecimal;
 
@@ -14,12 +16,13 @@ public class Main {
         celular.setDescricao("Celular moderno da Samsung");
         celular.setPreco(new BigDecimal("2000"));
 
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("loja");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityManager entityManager = JPAUtil.getEntityManager();
+
+        ProdutoDAO produtoDao = new ProdutoDAO(entityManager);
 
         entityManager.getTransaction().begin();
 
-            entityManager.persist(celular);
+            produtoDao.cadastrar(celular);
 
         entityManager.getTransaction().commit();
         entityManager.close();
