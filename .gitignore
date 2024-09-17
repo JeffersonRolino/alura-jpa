@@ -36,3 +36,7 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### JPA PERSISTENCE ###
+/src/main/resources/META-INF/persistence.xml
+persistence.xml
