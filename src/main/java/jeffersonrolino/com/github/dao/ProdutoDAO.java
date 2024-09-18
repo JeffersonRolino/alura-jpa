@@ -3,6 +3,7 @@ package jeffersonrolino.com.github.dao;
 import jakarta.persistence.EntityManager;
 import jeffersonrolino.com.github.entities.Produto;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class ProdutoDAO {
@@ -27,6 +28,13 @@ public class ProdutoDAO {
 
     public Produto buscarPorId(Long id){
         return entityManager.find(Produto.class, id);
+    }
+
+    public BigDecimal buscarPrecoDoProdutoComId(Long id){
+        String query = "SELECT p.preco FROM Produto p WHERE p.id = :id";
+        return entityManager.createQuery(query, BigDecimal.class)
+                .setParameter("id", id)
+                .getSingleResult();
     }
 
     public List<Produto> buscarTodos(){

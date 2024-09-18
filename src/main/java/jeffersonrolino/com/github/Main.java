@@ -20,10 +20,14 @@ public class Main {
 
 //        List<Produto> produtos = produtoDAO.buscarTodos();
 //        List<Produto> produtos = produtoDAO.buscarPorNome("Galaxy S6");
-        List<Produto> produtos = produtoDAO.buscarPorNomeDaCategoria("CELULARES");
+//        List<Produto> produtos = produtoDAO.buscarPorNomeDaCategoria("CELULARES");
 
-        System.out.println("\nPRODUTOS");
-        produtos.forEach(System.out::println);
+        BigDecimal preco = produtoDAO.buscarPrecoDoProdutoComId(2L);
+
+        System.out.println("\n" + "O Preço do Produto com id 2 é: " + preco);
+
+//        System.out.println("\nPRODUTOS");
+//        produtos.forEach(System.out::println);
     }
 
     public static void cadastrarProduto(Categoria categoria, String nome, String descricacao, BigDecimal preco){
