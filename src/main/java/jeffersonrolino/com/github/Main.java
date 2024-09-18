@@ -28,7 +28,12 @@ public class Main {
             categoriaDAO.cadastrar(celulares);
             produtoDao.cadastrar(celular);
 
+        entityManager.flush();
+        entityManager.clear();
+
+        celular = entityManager.merge(celular);
+
+        celular.setNome("Iphone 5");
         entityManager.getTransaction().commit();
-        entityManager.close();
     }
 }

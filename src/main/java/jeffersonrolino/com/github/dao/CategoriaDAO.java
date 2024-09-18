@@ -13,4 +13,8 @@ public class CategoriaDAO {
     public void cadastrar(Categoria categoria){
         this.entityManager.persist(categoria);
     }
+
+    public void atualizar(Categoria categoria){
+        this.entityManager.merge(categoria);
+    }
 }
