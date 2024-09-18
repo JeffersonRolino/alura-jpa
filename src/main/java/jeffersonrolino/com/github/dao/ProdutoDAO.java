@@ -17,4 +17,9 @@ public class ProdutoDAO {
     public void atualizar(Produto produto){
         this.entityManager.merge(produto);
     }
+
+    public void remover(Produto produto){
+        produto = entityManager.merge(produto);
+        this.entityManager.remove(produto);
+    }
 }
