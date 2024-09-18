@@ -33,4 +33,18 @@ public class ProdutoDAO {
         String query = "SELECT p FROM Produto p";
         return entityManager.createQuery(query, Produto.class).getResultList();
     }
+
+    public List<Produto> buscarPorNome(String nome){
+        String query = "SELECT p FROM Produto p WHERE p.nome = :nome";
+        return entityManager.createQuery(query, Produto.class)
+            .setParameter("nome", nome)
+            .getResultList();
+    }
+
+    public List<Produto> buscarPorNomeDaCategoria(String nome){
+        String query = "SELECT p FROM Produto p WHERE p.categoria.nome = :nome";
+        return entityManager.createQuery(query, Produto.class)
+                .setParameter("nome", nome)
+                .getResultList();
+    }
 }

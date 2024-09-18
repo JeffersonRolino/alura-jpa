@@ -18,7 +18,9 @@ public class Main {
         Produto produto = produtoDAO.buscarPorId(1L);
         System.out.println(produto);
 
-        List<Produto> produtos = produtoDAO.buscarTodos();
+//        List<Produto> produtos = produtoDAO.buscarTodos();
+//        List<Produto> produtos = produtoDAO.buscarPorNome("Galaxy S6");
+        List<Produto> produtos = produtoDAO.buscarPorNomeDaCategoria("CELULARES");
 
         System.out.println("\nPRODUTOS");
         produtos.forEach(System.out::println);
