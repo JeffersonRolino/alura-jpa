@@ -4,6 +4,7 @@ import jakarta.persistence.EntityManager;
 import jeffersonrolino.com.github.entities.Pedido;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class PedidoDAO {
     private EntityManager entityManager;
@@ -20,5 +21,17 @@ public class PedidoDAO {
         String jpql = "SELECT SUM(p.valorTotal) FROM Pedido p";
         return entityManager.createQuery(jpql, BigDecimal.class)
                 .getSingleResult();
+    }
+
+    public List<Object[]> relatorioDeVendas(){
+        String jpql = "SELECT produto.nome, " +
+                "SUM(item.quantidade), " +
+                "MAX(pedido.data) FROM Pedido pedido " +
+                "JOIN pedido.itens item " +
+                "JOIN item.produto produto " +
+                "GROUP BY produto.nome, item.quantidade " +
+                "ORDER BY item.quantidade DESC";
+        return entityManager.createQuery(jpql, Object[].class)
+            .getResultList();
     }
 }

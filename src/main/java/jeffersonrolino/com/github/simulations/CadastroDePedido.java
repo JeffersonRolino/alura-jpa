@@ -9,6 +9,8 @@ import jeffersonrolino.com.github.entities.*;
 import jeffersonrolino.com.github.util.JPAUtil;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Objects;
 
 public class CadastroDePedido {
 
@@ -37,6 +39,13 @@ public class CadastroDePedido {
 
             BigDecimal totalVendido = pedidoDAO.valorTotalVendido();
             System.out.println("VALOR TOTAL: " + totalVendido);
+
+            List<Object[]> relatorio = pedidoDAO.relatorioDeVendas();
+            for(Object[] objects : relatorio){
+                System.out.println(objects[0]);
+                System.out.println(objects[1]);
+                System.out.println(objects[2]);
+            }
 
         entityManager.close();
     }
