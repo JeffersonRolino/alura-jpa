@@ -2,6 +2,7 @@ package jeffersonrolino.com.github.dao;
 
 import jakarta.persistence.EntityManager;
 import jeffersonrolino.com.github.entities.Pedido;
+import jeffersonrolino.com.github.vo.RelatorioDeVendasVO;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -23,15 +24,17 @@ public class PedidoDAO {
                 .getSingleResult();
     }
 
-    public List<Object[]> relatorioDeVendas(){
-        String jpql = "SELECT produto.nome, " +
+    public List<RelatorioDeVendasVO> relatorioDeVendas(){
+        String jpql = "SELECT new RelatorioDeVendasVO(" +
+                "produto.nome, " +
                 "SUM(item.quantidade), " +
-                "MAX(pedido.data) FROM Pedido pedido " +
+                "MAX(pedido.data)) " +
+                "FROM Pedido pedido " +
                 "JOIN pedido.itens item " +
                 "JOIN item.produto produto " +
                 "GROUP BY produto.nome, item.quantidade " +
                 "ORDER BY item.quantidade DESC";
-        return entityManager.createQuery(jpql, Object[].class)
+        return entityManager.createQuery(jpql, RelatorioDeVendasVO.class)
             .getResultList();
     }
 }

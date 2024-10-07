@@ -7,10 +7,10 @@ import jeffersonrolino.com.github.dao.PedidoDAO;
 import jeffersonrolino.com.github.dao.ProdutoDAO;
 import jeffersonrolino.com.github.entities.*;
 import jeffersonrolino.com.github.util.JPAUtil;
+import jeffersonrolino.com.github.vo.RelatorioDeVendasVO;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Objects;
 
 public class CadastroDePedido {
 
@@ -24,15 +24,28 @@ public class CadastroDePedido {
             ClienteDAO clienteDAO = new ClienteDAO(entityManager);
             ProdutoDAO produtoDAO = new ProdutoDAO(entityManager);
 
-            Produto produto = produtoDAO.buscarPorId(1L);
+            Produto celular = produtoDAO.buscarPorId(1L);
+            Produto ps5 = produtoDAO.buscarPorId(2L);
+
             Cliente cliente = clienteDAO.buscarPorId(1L);
 
-            Pedido pedido = new Pedido(cliente);
+            Pedido pedido1 = new Pedido(cliente);
 
-            pedido.adicionarItem(new ItemPedido(10, pedido, produto));
+            pedido1.adicionarItem(new ItemPedido(10, pedido1, celular));
+            pedido1.adicionarItem(new ItemPedido(40, pedido1, ps5));
+
+            Produto macbook = produtoDAO.buscarPorId(3L);
+
+            Pedido pedido2 = new Pedido(cliente);
+
+            pedido2.adicionarItem(new ItemPedido(50, pedido2, celular));
+            pedido2.adicionarItem(new ItemPedido(10, pedido2, macbook));
+
+
             PedidoDAO pedidoDAO = new PedidoDAO(entityManager);
 
-            pedidoDAO.cadastrar(pedido);
+            pedidoDAO.cadastrar(pedido1);
+            pedidoDAO.cadastrar(pedido2);
 
         entityManager.getTransaction().commit();
 
@@ -40,12 +53,8 @@ public class CadastroDePedido {
             BigDecimal totalVendido = pedidoDAO.valorTotalVendido();
             System.out.println("VALOR TOTAL: " + totalVendido);
 
-            List<Object[]> relatorio = pedidoDAO.relatorioDeVendas();
-            for(Object[] objects : relatorio){
-                System.out.println(objects[0]);
-                System.out.println(objects[1]);
-                System.out.println(objects[2]);
-            }
+            List<RelatorioDeVendasVO> relatorio = pedidoDAO.relatorioDeVendas();
+            relatorio.forEach(System.out::println);
 
         entityManager.close();
     }
@@ -54,7 +63,13 @@ public class CadastroDePedido {
         EntityManager entityManager = JPAUtil.getEntityManager();
 
         Categoria celulares = new Categoria("CELULARES");
-        Produto produto = new Produto("IPhone 16 Pro", "Novo iphone da Apple", new BigDecimal(2800), celulares);
+        Categoria videogames = new Categoria("VIDEOGAMES");
+        Categoria informatica = new Categoria("INFORMATICA");
+
+        Produto celular = new Produto("IPhone 16 Pro", "Novo iphone da Apple", new BigDecimal(2800), celulares);
+        Produto videogame = new Produto("PS5", "Playstation 5", new BigDecimal(1800), videogames);
+        Produto macbook = new Produto("Macbook", "MacBook Pro", new BigDecimal(10000), informatica);
+
         Cliente cliente = new Cliente("Fernando", "123456");
 
         ProdutoDAO produtoDAO = new ProdutoDAO(entityManager);
@@ -64,7 +79,13 @@ public class CadastroDePedido {
         entityManager.getTransaction().begin();
 
             categoriaDAO.cadastrar(celulares);
-            produtoDAO.cadastrar(produto);
+            categoriaDAO.cadastrar(videogames);
+            categoriaDAO.cadastrar(informatica);
+
+            produtoDAO.cadastrar(celular);
+            produtoDAO.cadastrar(videogame);
+            produtoDAO.cadastrar(macbook);
+
             clienteDAO.cadastrar(cliente);
 
         entityManager.getTransaction().commit();
