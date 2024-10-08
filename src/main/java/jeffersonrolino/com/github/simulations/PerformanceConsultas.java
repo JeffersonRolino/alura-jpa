@@ -18,13 +18,13 @@ public class PerformanceConsultas {
         EntityManager entityManager = JPAUtil.getEntityManager();
         popularBancoDeDados();
 
-        PedidoDAO pedidoDAO = new PedidoDAO(entityManager);
+        ProdutoDAO produtoDAO = new ProdutoDAO(entityManager);
 
-        Pedido pedido = pedidoDAO.buscarPedidoComCliente(1L);
+        List<Produto> produtos = produtoDAO.buscarPorParametrosComCriteria("Macbook", BigDecimal.valueOf(9999.99), null);
+
+        produtos.forEach(System.out::println);
 
         entityManager.close();
-
-        System.out.println(pedido.getCliente().getNome());
     }
 
     public static void popularBancoDeDados(){
@@ -36,7 +36,8 @@ public class PerformanceConsultas {
 
         Produto celular = new Produto("IPhone 16 Pro", "Novo iphone da Apple", new BigDecimal(2800), celulares);
         Produto ps5 = new Produto("PS5", "Playstation 5", new BigDecimal(1800), videogames);
-        Produto macbook = new Produto("Macbook", "MacBook Pro", new BigDecimal(10000), informatica);
+        Produto macbook = new Produto("Macbook", "MacBook Pro", new BigDecimal(12499.99), informatica);
+        Produto macbook2 = new Produto("Macbook", "MacBook Air", new BigDecimal(9999.99), informatica);
 
         Cliente cliente = new Cliente("Fernando", "123456");
 
@@ -63,6 +64,7 @@ public class PerformanceConsultas {
             produtoDAO.cadastrar(celular);
             produtoDAO.cadastrar(ps5);
             produtoDAO.cadastrar(macbook);
+            produtoDAO.cadastrar(macbook2);
 
             clienteDAO.cadastrar(cliente);
 
