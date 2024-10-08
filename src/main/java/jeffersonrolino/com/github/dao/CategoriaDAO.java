@@ -2,6 +2,7 @@ package jeffersonrolino.com.github.dao;
 
 import jakarta.persistence.EntityManager;
 import jeffersonrolino.com.github.entities.Categoria;
+import jeffersonrolino.com.github.entities.CategoriaId;
 import jeffersonrolino.com.github.entities.Produto;
 
 public class CategoriaDAO {
@@ -15,7 +16,7 @@ public class CategoriaDAO {
         this.entityManager.persist(categoria);
     }
 
-    public Categoria buscarPorId(Long id){
+    public Categoria buscarPorId(CategoriaId id){
         return entityManager.find(Categoria.class, id);
     }
 

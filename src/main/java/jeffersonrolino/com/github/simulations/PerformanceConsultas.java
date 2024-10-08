@@ -18,11 +18,11 @@ public class PerformanceConsultas {
         EntityManager entityManager = JPAUtil.getEntityManager();
         popularBancoDeDados();
 
-        ProdutoDAO produtoDAO = new ProdutoDAO(entityManager);
+        CategoriaDAO categoriaDAO = new CategoriaDAO(entityManager);
 
-        List<Produto> produtos = produtoDAO.buscarPorParametrosComCriteria("Macbook", BigDecimal.valueOf(9999.99), null);
+        Categoria categoria = categoriaDAO.buscarPorId(new CategoriaId("CELULARES", "Eletronicos"));
 
-        produtos.forEach(System.out::println);
+        System.out.println(categoria);
 
         entityManager.close();
     }
@@ -30,9 +30,9 @@ public class PerformanceConsultas {
     public static void popularBancoDeDados(){
         EntityManager entityManager = JPAUtil.getEntityManager();
 
-        Categoria celulares = new Categoria("CELULARES");
-        Categoria videogames = new Categoria("VIDEOGAMES");
-        Categoria informatica = new Categoria("INFORMATICA");
+        Categoria celulares = new Categoria("CELULARES", "Eletronicos");
+        Categoria videogames = new Categoria("VIDEOGAMES", "Eletronicos");
+        Categoria informatica = new Categoria("INFORMATICA", "Eletronicos");
 
         Produto celular = new Produto("IPhone 16 Pro", "Novo iphone da Apple", new BigDecimal(2800), celulares);
         Produto ps5 = new Produto("PS5", "Playstation 5", new BigDecimal(1800), videogames);

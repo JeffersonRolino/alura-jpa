@@ -62,9 +62,9 @@ public class CadastroDePedido {
     public static void popularBancoDeDados(){
         EntityManager entityManager = JPAUtil.getEntityManager();
 
-        Categoria celulares = new Categoria("CELULARES");
-        Categoria videogames = new Categoria("VIDEOGAMES");
-        Categoria informatica = new Categoria("INFORMATICA");
+        Categoria celulares = new Categoria("CELULARES", "Eletronicos");
+        Categoria videogames = new Categoria("VIDEOGAMES", "Eletronicos");
+        Categoria informatica = new Categoria("INFORMATICA", "Eletronicos");
 
         Produto celular = new Produto("IPhone 16 Pro", "Novo iphone da Apple", new BigDecimal(2800), celulares);
         Produto videogame = new Produto("PS5", "Playstation 5", new BigDecimal(1800), videogames);
