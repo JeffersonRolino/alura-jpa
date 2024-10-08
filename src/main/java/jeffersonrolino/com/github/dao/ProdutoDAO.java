@@ -1,9 +1,11 @@
 package jeffersonrolino.com.github.dao;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import jeffersonrolino.com.github.entities.Produto;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 public class ProdutoDAO {
@@ -53,5 +55,34 @@ public class ProdutoDAO {
         return entityManager.createNamedQuery("Produto.produtosPorCategoria", Produto.class)
                 .setParameter("nome", nome)
                 .getResultList();
+    }
+
+    public List<Produto> buscarPorParametros(String nome, BigDecimal preco, LocalDate dataCadastro){
+        //BASE QUERY
+        String jpql = "SELECT p FROM Produto p WHERE 1=1 ";
+
+        if(nome != null && !nome.trim().isEmpty()){
+            jpql += " AND p.nome = :nome ";
+        }
+        if(preco != null){
+            jpql += " AND p.preco = :nome ";
+        }
+        if(dataCadastro != null){
+            jpql += " AND p.dataCadastro = :dataCadastro";
+        }
+
+        TypedQuery<Produto> query = entityManager.createQuery(jpql, Produto.class);
+
+        if(nome != null && !nome.trim().isEmpty()){
+            query.setParameter("nome", nome);
+        }
+        if(preco != null){
+            query.setParameter("preco", preco);
+        }
+        if(dataCadastro != null){
+            query.setParameter("dataCadastro", dataCadastro);
+        }
+
+        return query.getResultList();
     }
 }
